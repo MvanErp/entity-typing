@@ -1,0 +1,182 @@
+# R plot code for top level reuters topics 
+results <- read.table("Work/Papers/ISWC2016/AIDA_toplevel.scores", header=F, sep=",")
+score1_low = results[1,]
+score5_low = results[2,]
+score10_low = results[3,]
+# Turn list objects into vectors otherwise R will complain 
+low1<-unlist(score1_low)
+low5<-unlist(score5_low)
+low10<-unlist(score10_low)
+# Plot the thing
+plot(low1, pch=15, col="green", xaxt="n", ylim=c(0, 100), xlab="Topics", ylab="Precision")
+points(low5, pch=17, col="blue")
+points(low10, pch=19, col="purple")
+axis(1, at=1:60, labels=c(1:60), las=2)
+
+
+### Bar chart:
+
+results_for_barchart_top_low <-read.table("Work/Papers/ISWC2016/AIDA_ReutersTop_DBpedia_Low.txt", header=T, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+barplot(t(results_for_barchart_top_low), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 70), main="AIDA-YAGO Top Level Reuters Categories Results Finegrained Entity Typing", names.arg=c(1:60), cex.names=0.5, las=2)
+legend("topright", names(results_for_barchart), fill=terrain.colors(3), cex=0.7)
+
+
+
+results_for_barchart_top_top <-read.table("Work/Papers/ISWC2016/AIDA_ReutersTop_DBpedia_Top.txt", header=T, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+barplot(t(results_for_barchart_top_top), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 70), main="AIDA-YAGO Top Level Reuters Categories Coarsegrained Results Entity Typing", names.arg=c(1:60), cex.names=0.5, las=2)
+legend("topright", names(results_for_barchart), fill=terrain.colors(3), cex=0.7)
+
+
+results_for_barchart_low_low <-read.table("Work/Papers/ISWC2016/AIDA_ReutersLow_DBpedia_Low.txt", header=T, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+barplot(t(results_for_barchart_low_low), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 175), main="AIDA-YAGO Finegrained Reuters Categories Results Finegrained Entity Typing", names.arg=c(1:173), cex.names=0.5, las=2)
+legend("topright", names(results_for_barchart), fill=terrain.colors(3), cex=0.7)
+
+
+results_for_barchart_low_top <-read.table("Work/Papers/ISWC2016/AIDA_ReutersLow_DBpedia_Top.txt", header=T, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+barplot(t(results_for_barchart_low_top), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 175), main="AIDA-YAGO Finegrained Reuters Categories Results Coarsegrained Entity Typing", names.arg=c(1:173), cex.names=0.5, las=2)
+legend("topright", names(results_for_barchart), fill=terrain.colors(3), cex=0.7)
+
+
+#### New experiments with only single topic per entity
+
+aidaLowWikipediaCoarse<-read.table("Work/Papers/ISWC2016/AIDA-LowLevelSingleWikipedia_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-LowWikipediaCoarse.pdf")
+barplot(t(aidaLowWikipediaCoarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories Wikipedia Coarse", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowWikipediaFine<-read.table("Work/Papers/ISWC2016/AIDA-LowLevelSingleWikipedia_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-LowWikipediaFine.pdf")
+barplot(t(aidaLowWikipediaFine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories Wikipedia Fine", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowGoogleCoarse<-read.table("Work/Papers/ISWC2016/AIDA-LowlevelSingleGoogle_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-LowGoogleCoarse.pdf")
+barplot(t(aidaLowGoogleCoarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories GoogleNews Coarse", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowGoogleFine<-read.table("Work/Papers/ISWC2016/AIDA-LowlevelSingleGoogle_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-LowGoogleFine.pdf")
+barplot(t(aidaLowGoogleFine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories GoogleNews Fine", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowRCV1Coarse<-read.table("Work/Papers/ISWC2016/AIDA-LowlevelSingleRCV1_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-LowRCV1Coarse.pdf")
+barplot(t(aidaLowRCV1Coarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories RCV1 Coarse", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowRCV1Fine<-read.table("Work/Papers/ISWC2016/AIDA-LowlevelSingleRCV1_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-LowRCV1Fine.pdf")
+barplot(t(aidaLowRCV1Fine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories RCV1 Fine", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+
+
+
+aidaTopWikipediaCoarse<-read.table("Work/Papers/ISWC2016/AIDA-TopLevelSingleWikipedia_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-TopWikipediaCoarse.pdf")
+barplot(t(aidaTopWikipediaCoarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories Wikipedia Coarse", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopWikipediaFine<-read.table("Work/Papers/ISWC2016/AIDA-TopLevelSingleWikipedia_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-TopWikipediaFine.pdf")
+barplot(t(aidaTopWikipediaFine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories Wikipedia Fine", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopGoogleCoarse<-read.table("Work/Papers/ISWC2016/AIDA-ToplevelSingleGoogle_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-TopGoogleCoarse.pdf")
+barplot(t(aidaTopGoogleCoarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories GoogleNews Coarse", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopGoogleFine<-read.table("Work/Papers/ISWC2016/AIDA-ToplevelSingleGoogle_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-TopGoogleFine.pdf")
+barplot(t(aidaTopGoogleFine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories GoogleNews Fine", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopRCV1Coarse<-read.table("Work/Papers/ISWC2016/AIDA-ToplevelSingleRCV1_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-TopRCV1Coarse.pdf")
+barplot(t(aidaTopRCV1Coarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories RCV1 Coarse", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopRCV1Fine<-read.table("Work/Papers/ISWC2016/AIDA-ToplevelSingleRCV1_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/aida-TopRCV1Fine.pdf")
+barplot(t(aidaTopRCV1Fine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories RCV1 Fine", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+
+
+
+wikinewsGoogleCoarse<-read.table("Work/Papers/ISWC2016/Wikinews_TopicsGoogle_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/wikinews-GoogleNewsCoarse.pdf")
+barplot(t(wikinewsGoogleCoarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", main="Wikinews Google Coarse", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsGoogleFine<-read.table("Work/Papers/ISWC2016/Wikinews_TopicsGoogle_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/wikinews-GoogleNewsFine.pdf")
+barplot(t(wikinewsGoogleFine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", main="Wikinews Google Fine", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsRCV1Coarse<-read.table("Work/Papers/ISWC2016/Wikinews_TopicsRCV1_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/wikinews-RCV1Coarse.pdf")
+barplot(t(wikinewsRCV1Coarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", main="Wikinews RCV1 Coarse", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsRCV1Fine<-read.table("Work/Papers/ISWC2016/Wikinews_TopicsRCV1_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/wikinews-RCV1Fine.pdf")
+barplot(t(wikinewsRCV1Fine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", main="Wikinews RCV1 Fine", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsWikipediaCoarse<-read.table("Work/Papers/ISWC2016/Wikinews_TopicsWikipedia_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/wikinews-WikipediaCoarse.pdf")
+barplot(t(wikinewsWikipediaCoarse), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", main="Wikinews Wikipedia Coarse", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsWikipediaFine<-read.table("Work/Papers/ISWC2016/Wikinews_TopicsWikipedia_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("Work/Papers/ISWC2016/paper/wikinews-WikipediaFine.pdf")
+barplot(t(wikinewsWikipediaFine), ylim=c(1,100), col=terrain.colors(3), xlab="Topics", ylab="Percentage correct", main="Wikinews Wikipedia Fine", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+
+
+# Let's not do this :) 
+# Add topic titles to axis 
+axis(1, at=1:60, labels=c("accountsearningsperformancecorporateindustrialgovernmentsocial","accountsearningsperformancecorporateindustrial","accountsearningsperformancefundingcapitalcorporateindustrial","commodity_marketsmarkets","consumer_financeeconomics","contractsorderscorporateindustrialgovernmentsocial","contractsorderscorporateindustrialgovernment_financeeconomics","contractsorderscorporateindustrial","corporateindustrialcommodity_marketsmarkets","corporateindustrialemploymentlaboureconomicsgovernmentsocial","corporateindustrialeuropean_communitygovernmentsocial","corporateindustrialgovernmentsocialcommodity_marketsmarkets","corporateindustrialgovernmentsocial","corporateindustrialmarkets","corporateindustrialmonetaryeconomiceconomics","corporateindustrialtradereserveseconomics","corporateindustrial","economicsgovernmentsocial","economics","employmentlaboureconomicsgovernmentsocial","employmentlabourtradereserveseconomicsgovernmentsocial","european_communitygovernmentsocialcommodity_marketsmarkets","european_communitygovernmentsocial","fundingcapitalcorporateindustrialeuropean_communitygovernmentsocial","fundingcapitalcorporateindustrialgovernment_financeeconomics","fundingcapitalcorporateindustrial","governmentsocial","government_financeeconomicsgovernmentsocial","government_financeeconomicsmarkets","government_financeeconomics","government_financeemploymentlaboureconomicsgovernmentsocial","inflationpricesconsumer_financeoutputcapacityeconomicsmarkets","managementcorporateindustrial","marketsmarketingcorporateindustrialcommodity_marketsmarkets","marketsmarketingcorporateindustrialeuropean_communitygovernmentsocial","marketsmarketingcorporateindustrialgovernmentsocial","marketsmarketingcorporateindustrialtradereserveseconomicseuropean_communitygovernmentsocial","marketsmarketingcorporateindustrialtradereserveseconomicsgovernmentsocial","marketsmarketingcorporateindustrial","markets","monetaryeconomiceconomicseuropean_communitygovernmentsocial","monetaryeconomiceconomicsgovernmentsocialmoney_marketsmarkets","monetaryeconomiceconomicsgovernmentsocial","monetaryeconomiceconomicsmoney_marketsmarkets","monetaryeconomiceconomics","monetaryeconomicgovernment_financeeconomicsgovernmentsocial","money_marketscommodity_marketsmarkets","money_marketsmarkets","none","outputcapacityeconomics","ownership_changescorporateindustrialmonetaryeconomicemploymentlaboureconomicsgovernmentsocial","ownership_changescorporateindustrial","performanceaccountsearningscorporateindustrial","performancecorporateindustrialmarkets","performancecorporateindustrial","performancemarketsmarketingcorporateindustrial","performanceownership_changescorporateindustrial","tradereserveseconomicseuropean_communitygovernmentsocial","tradereserveseconomicsgovernmentsocial","tradereserveseconomics"), las=2)
