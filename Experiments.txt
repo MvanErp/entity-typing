@@ -1,0 +1,84 @@
+Commands used to carry out the experiments 
+
+#### 
+Prerequisites:
+Python2.7, Gensim, SPARQLWrapper
+Word2vec https://code.google.com/archive/p/word2vec/
+CoNLL NER dataset creation scripts: http://www.cnts.ua.ac.be/conll2003/ner/  /  http://www.cnts.ua.ac.be/conll2003/ner.tgz
+
+Data:
+Pretrained GoogleNews Word2Vec model: https://code.google.com/archive/p/word2vec/ / https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing 
+Pretrained Wikinews Word2Vec model: https://github.com/idio/wiki2vec / https://github.com/idio/wiki2vec/raw/master/torrents/enwiki-gensim-word2vec-1000-nostem-10cbow.torrent
+Reuters RCV1: http://trec.nist.gov/data/reuters/reuters.html
+
+Benchmark datasets: https://github.com/dbpedia-spotlight/evaluation-datasets/tree/master/data
+
+Additional topic information for AIDA-YAGO2 dataset: 
+rcv1.topics.hier.orig and rcv1-v2.topics.qrels.gz: http://www.jmlr.org/papers/volume5/lewis04a/lyrl2004_rcv1v2_README.htm
+
+DBpedia ontology 2015-10: http://downloads.dbpedia.org/2015-10/dbpedia_2015-10.owl
+
+###############
+# Training a Word2Vec model from the RCV1 data 
+###############
+
+# Extract text from Reuters articles 
+getReutersText.py 
+  
+# Create model (same settings as GoogleNews model: https://groups.google.com/forum/#!msg/word2vec-toolkit/lxbl_MB29Ic/g4uEz5rNV08J (minus -read-vocab voc as that isn't available) 
+./word2vec -train reuters.txt -output rcv1vectors.bin -cbow 1 -size 300 -window 5 -negative 3 -hs 0 -sample 1e-5 -threads 12 -binary 1 -min-count 10
+
+ ###############
+ # Add topics to AIDA-YAGO2 dataset 
+ ###############
+
+# Slightly modified CoNLL 2003 ner creation script to also print out document titles 
+make.eng # modified version can be found in scripts/
+
+# First gather the topics 
+getTopicDescriptions.py and write each topic description and document id to a file 
+
+# Loop through AIDA-YAGO-dataset.tsv and add the topic to each article
+addTopicsToAIDAYAGOfile.py
+
+# Separate AIDA-YAGO dataset into one file with entity mentions and entity links per topic
+separateAIDA-YAGObyTopic_singleTopicPerEntityWithNIL.py
+
+#################
+#  Gather DBpedia type information for every entity in the datasets 
+#################
+
+# Generate list of types 
+getTypes.py
+
+#####
+# Generate list of DBpedia type hierarchy for evaluation 
+# With help from: http://stackoverflow.com/questions/17750421/retrieving-all-paths-in-an-owl-class-hierarchy-with-sparql-and-jena?answertab=votes#tab-top 
+#####
+
+python analyseDBpediaOntology.py | sort > DBpediaHierarchy.tsv
+
+
+
+#################
+# Run Similarity Experiments 
+#################
+
+# Compute similarity for each entity pair 
+python getSimilarity.py
+
+# Gather results for each entity per class 
+python gatherResultsTypeClassification.py types similarities > results
+
+#  Order the gold standard scores via the DBpedia hierarchy 
+python orderGoldStandardTypes.py results > results_ordered
+
+# Compute scores for the Tables in the paper 
+python computeScores.py results_ordered 
+# Compute scores for the R Figures 
+# Coarse grained
+computeScores_coarse.py
+# Fine grained 
+computeScores_fine.py
+
+## See generateRplots.txt for code to generate the Figures in the paper 

@@ -1,0 +1,135 @@
+# Check paths before you run this! 
+
+aidaLowWikipediaCoarse<-read.table("AIDA-LowLevelSingleWikipedia_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-LowWikipediaCoarse.pdf")
+barplot(t(aidaLowWikipediaCoarse), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories Wikipedia Coarse", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowWikipediaFine<-read.table("AIDA-LowLevelSingleWikipedia_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-LowWikipediaFine.pdf")
+barplot(t(aidaLowWikipediaFine), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories Wikipedia Fine", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowGoogleCoarse<-read.table("AIDA-LowlevelSingleGoogle_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-LowGoogleCoarse.pdf")
+barplot(t(aidaLowGoogleCoarse), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories GoogleNews Coarse", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowGoogleFine<-read.table("AIDA-LowlevelSingleGoogle_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-LowGoogleFine.pdf")
+barplot(t(aidaLowGoogleFine), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories GoogleNews Fine", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowRCV1Coarse<-read.table("AIDA-LowlevelSingleRCV1_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-LowRCV1Coarse.pdf")
+barplot(t(aidaLowRCV1Coarse), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories RCV1 Coarse", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaLowRCV1Fine<-read.table("AIDA-LowlevelSingleRCV1_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-LowRCV1Fine.pdf")
+barplot(t(aidaLowRCV1Fine), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 75), main="AIDA-YAGO Finegrained Categories RCV1 Fine", names.arg=c(1:69), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+
+
+
+aidaTopWikipediaCoarse<-read.table("AIDA-TopLevelSingleWikipedia_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-TopWikipediaCoarse.pdf")
+barplot(t(aidaTopWikipediaCoarse), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories Wikipedia Coarse", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopWikipediaFine<-read.table("AIDA-TopLevelSingleWikipedia_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-TopWikipediaFine.pdf")
+barplot(t(aidaTopWikipediaFine), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories Wikipedia Fine", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopGoogleCoarse<-read.table("AIDA-ToplevelSingleGoogle_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-TopGoogleCoarse.pdf")
+barplot(t(aidaTopGoogleCoarse), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories GoogleNews Coarse", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopGoogleFine<-read.table("AIDA-ToplevelSingleGoogle_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-TopGoogleFine.pdf")
+barplot(t(aidaTopGoogleFine), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories GoogleNews Fine", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopRCV1Coarse<-read.table("AIDA-ToplevelSingleRCV1_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-TopRCV1Coarse.pdf")
+barplot(t(aidaTopRCV1Coarse), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories RCV1 Coarse", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+aidaTopRCV1Fine<-read.table("AIDA-ToplevelSingleRCV1_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/aida-TopRCV1Fine.pdf")
+barplot(t(aidaTopRCV1Fine), ylim=c(1,100), col=terrain.colors(3),   xlim=c(1, 25), main="AIDA-YAGO Coarsegrained Categories RCV1 Fine", names.arg=c(1:22), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+
+
+
+wikinewsGoogleCoarse<-read.table("Wikinews_TopicsGoogle_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/wikinews-GoogleNewsCoarse.pdf")
+barplot(t(wikinewsGoogleCoarse), ylim=c(1,100), col=terrain.colors(3),   main="Wikinews Google Coarse", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsGoogleFine<-read.table("Wikinews_TopicsGoogle_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/wikinews-GoogleNewsFine.pdf")
+barplot(t(wikinewsGoogleFine), ylim=c(1,100), col=terrain.colors(3),   main="Wikinews Google Fine", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsRCV1Coarse<-read.table("Wikinews_TopicsRCV1_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/wikinews-RCV1Coarse.pdf")
+barplot(t(wikinewsRCV1Coarse), ylim=c(1,100), col=terrain.colors(3),   main="Wikinews RCV1 Coarse", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsRCV1Fine<-read.table("Wikinews_TopicsRCV1_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/wikinews-RCV1Fine.pdf")
+barplot(t(wikinewsRCV1Fine), ylim=c(1,100), col=terrain.colors(3),   main="Wikinews RCV1 Fine", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsWikipediaCoarse<-read.table("Wikinews_TopicsWikipedia_COARSE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/wikinews-WikipediaCoarse.pdf")
+barplot(t(wikinewsWikipediaCoarse), ylim=c(1,100), col=terrain.colors(3),   main="Wikinews Wikipedia Coarse", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+wikinewsWikipediaFine<-read.table("Wikinews_TopicsWikipedia_FINE.tsv", header=F, sep="\t")
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+pdf("paper/wikinews-WikipediaFine.pdf")
+barplot(t(wikinewsWikipediaFine), ylim=c(1,100), col=terrain.colors(3),   main="Wikinews Wikipedia Fine", names.arg=c(1:4), cex.names=0.5, las=2)
+legend("topright", names<-c("1", "5", "10"), fill=terrain.colors(3), cex=0.7)
+dev.off()
+
+
