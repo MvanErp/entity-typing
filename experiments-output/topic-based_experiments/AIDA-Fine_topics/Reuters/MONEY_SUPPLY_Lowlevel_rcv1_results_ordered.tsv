@@ -1,0 +1,7 @@
+Bank of Canada_**_http://dbpedia.org/resource/Bank_of_Canada	Country	0.287331768102	Place	0.124380348955	PopulatedPlace	0.124380348955	City	-0.20152248934	Settlement	-0.20152248934		GOLD_STANDARD:	
+OTTAWA_**_http://dbpedia.org/resource/Ottawa	Country	0.0567821791376	PopulatedPlace	0.0550050885173	Place	0.0550050885173	Settlement	0.0478967260361	City	0.0478967260361		GOLD_STANDARD:	Place	PopulatedPlace	Settlement	City
+Canada_**_http://dbpedia.org/resource/Canada	Country	0.262663615796	PopulatedPlace	0.116228033075	Place	0.116228033075	Settlement	-0.103425341006	City	-0.103425341006		GOLD_STANDARD:	Place	PopulatedPlace	Country
+Canadian_**_http://dbpedia.org/resource/Canada	Country	0.260464847781	PopulatedPlace	0.121464492428	Place	0.121464492428	Settlement	-0.0870360406002	City	-0.0870360406002		GOLD_STANDARD:	Place	PopulatedPlace	Country
+BANGLADESH_**_http://dbpedia.org/resource/Bangladesh	Settlement	0.322024942636	City	0.322024942636	PopulatedPlace	0.0935633811591	Place	0.0935633811591	Country	-0.0587443264922		GOLD_STANDARD:	Place	PopulatedPlace	Country
+DHAKA_**_http://dbpedia.org/resource/Dhaka	Country	0.0689661262022	Place	0.064752246169	PopulatedPlace	0.064752246169	City	0.0478967260361	Settlement	0.0478967260361		GOLD_STANDARD:	Place	PopulatedPlace	Settlement	City
+Bangladesh_**_http://dbpedia.org/resource/Bangladesh	Country	0.151815749393	Place	0.139062669496	PopulatedPlace	0.139062669496	Settlement	0.11993304965	City	0.11993304965		GOLD_STANDARD:	Place	PopulatedPlace	Country

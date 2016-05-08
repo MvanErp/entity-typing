@@ -1,0 +1,4 @@
+Treasury Department_**_http://dbpedia.org/resource/United_States_Department_of_the_Treasury	PopulatedPlace	0.105081257866	Settlement	0.105081257866	Place	0.105081257866		GOLD_STANDARD:	Agent	Organisation	GovernmentAgency
+Fed_**_http://dbpedia.org/resource/Federal_Reserve_System	GovernmentAgency	0.10189681134	Organisation	0.10189681134	Agent	0.10189681134	PopulatedPlace	0.0809265330662	Settlement	0.0809265330662	Place	0.0809265330662		GOLD_STANDARD:	
+WASHINGTON_**_http://dbpedia.org/resource/Washington,_D.C.	GovernmentAgency	0.105081257866	Organisation	0.105081257866	Agent	0.105081257866		GOLD_STANDARD:	Place	PopulatedPlace	Settlement
+Federal Reserve_**_http://dbpedia.org/resource/Federal_Reserve_System	GovernmentAgency	0.278809273728	Organisation	0.278809273728	Agent	0.278809273728	PopulatedPlace	0.0336836713149	Settlement	0.0336836713149	Place	0.0336836713149		GOLD_STANDARD:	
