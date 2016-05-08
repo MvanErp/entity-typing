@@ -23,7 +23,8 @@ DBpedia ontology 2015-10: http://downloads.dbpedia.org/2015-10/dbpedia_2015-10.o
 ###############
 
 # Extract text from Reuters articles 
-getReutersText.py 
+# cd to directory with Reuters articles 
+for x in *xml ; do python getReutersText.py $x >> reuters.txt ; done 
   
 # Create model (same settings as GoogleNews model: https://groups.google.com/forum/#!msg/word2vec-toolkit/lxbl_MB29Ic/g4uEz5rNV08J (minus -read-vocab voc as that isn't available) 
 ./word2vec -train reuters.txt -output rcv1vectors.bin -cbow 1 -size 300 -window 5 -negative 3 -hs 0 -sample 1e-5 -threads 12 -binary 1 -min-count 10
@@ -32,32 +33,49 @@ getReutersText.py
  # Add topics to AIDA-YAGO2 dataset 
  ###############
 
-# Slightly modified CoNLL 2003 ner creation script to also print out document titles 
-make.eng # modified version can be found in scripts/
+# Slightly modified CoNLL 2003 ner creation script to also print out document titles
+# Add modified make.eng (to be found in scripts/ ) to the CoNLL 2003 ner creation scripts directory 
+# Update the Paths in lines 7, 30 and 63  to help the script find the data. 
+bash make.eng
 
-# First gather the topics 
-getTopicDescriptions.py and write each topic description and document id to a file 
+# Grab the filenames of the files used for the NER training set from the resulting files:
+grep "-DOCSTART-" < eng.train > index_docnames.txt
+grep "-DOCSTART-" < eng.testa >> index_docnames.txt
+grep "-DOCSTART-" < eng.testb >> index_docnames.txt
+
+
+# Reformat the Reuters topic file:
+tr -s " " < rcv1.topics.hier.orig.txt | tr " " "\t" > rcv1.topics.hier.orig.tsv 
+
+# Then gather the topics and write each topic description and document id to a file 
+# (twice, once for fine grained topics, once for coarse grained, switch not in line 29) 
+python getTopicDescriptions.py > docIds_topics_lowlevel.tsv 
+python getTopicDescriptions.py > docIds_topics_toplevel.tsv 
 
 # Loop through AIDA-YAGO-dataset.tsv and add the topic to each article
-addTopicsToAIDAYAGOfile.py
+# (twice, once for fine grained topics, once for coarse grained, switch commenting out lines 15 and 16) 
+python addTopicsToAIDAYAGOfile.py > AIDA-YAGO2-dataset_topicsLowlevel.tsv
+python addTopicsToAIDAYAGOfile.py > AIDA-YAGO2-dataset_topicsToplevel.tsv
 
 # Separate AIDA-YAGO dataset into one file with entity mentions and entity links per topic
-separateAIDA-YAGObyTopic_singleTopicPerEntityWithNIL.py
+# (twice, once for fine grained topics, once for coarse grained, switch commenting out lines 10 and 11)
+python separateAIDA-YAGObyTopic_singleTopicPerEntityWithNIL.py 
+# Currently this script doesn't put the files in a different directory, therefore between running it, clean up your directory by putting the output files into a new directory. e.g. AIDA-lowlevel before running the script for the toplevel topics. 
 
 #################
 #  Gather DBpedia type information for every entity in the datasets 
 #################
 
 # Generate list of types 
-getTypes.py
+# CD to the directory with the entity datasets, this only needs to be done once for each dataset, so you don't have to do this separately for the AIDA and Wikinews datasets with the topics 
+for x in entity_mentions/dataset-based_experiments/*.tsv ; do output=${x#entity_mentions/dataset-based_experiments/} ; python getTypes.py $x > ../entity_types/${output%.tsv}_types.txt ; done 
 
 #####
 # Generate list of DBpedia type hierarchy for evaluation 
 # With help from: http://stackoverflow.com/questions/17750421/retrieving-all-paths-in-an-owl-class-hierarchy-with-sparql-and-jena?answertab=votes#tab-top 
 #####
-
+# cd to the directory with the DBpedia ontology 
 python analyseDBpediaOntology.py | sort > DBpediaHierarchy.tsv
-
 
 
 #################
@@ -65,16 +83,53 @@ python analyseDBpediaOntology.py | sort > DBpediaHierarchy.tsv
 #################
 
 # Compute similarity for each entity pair 
-python getSimilarity.py
+# in case these dirs don't exist yet:
+# mkdir entity_mentions/dataset-based_experiments/Google
+# mkdir entity_mentions/dataset-based_experiments/Wikinews
+# mkdir entity_mentions/dataset-based_experiments/Reuters
+# cd to directory with data models 
+for x in entity_mentions/dataset-based_experiments/*.tsv ; do python getSimilarity.py $x > Google/${x%.tsv}_google.tsv ; done 
+for x in entity_mentions/dataset-based_experiments/*.tsv ; do python getSimilarity_rcv1.py $x > Reuters/${x%.tsv}_rcv1.tsv ; done 
+for x in entity_mentions/dataset-based_experiments/*.tsv ; do python getSimilarity_Wikipedia.py $x > Wikipedia/${x%.tsv}_wikipedia.tsv ; done
+# Also for the topics based experiments
+# in case these dirs don't exist yet:
+# mkdir entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/Google
+# mkdir entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/Wikinews
+# mkdir entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/Reuters
+# mkdir entity_mentions/topic-based_experiments/AIDA-Fine_Topics/Google
+# mkdir entity_mentions/topic-based_experiments/AIDA-Fine_Topics/Wikinews
+# mkdir entity_mentions/topic-based_experiments/AIDA-Fine_Topics/Reuters
+# mkdir entity_mentions/topic-based_experiments/Wikinews-Topics/Google
+# mkdir entity_mentions/topic-based_experiments/Wikinews-Topics/Wikinews
+# mkdir entity_mentions/topic-based_experiments/Wikinews-Topics/Reuters
+for x in entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/*.tsv ; do python getSimilarity.py $x > Google/${x%.tsv}_google.tsv ; done
+for x in entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/*.tsv ; do python getSimilarity_rcv1.py $x > Reuters/${x%.tsv}_rcv1.tsv ; done
+for x in entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/*.tsv ; do python getSimilarity_Wikipedia.py $x > Wikipedia/${x%.tsv}_wikipedia.tsv ; done
+for x in entity_mentions/topic-based_experiments/AIDA-Fine_Topics/*.tsv ; do python getSimilarity.py $x > Google/${x%.tsv}_google.tsv ; done
+for x in entity_mentions/topic-based_experiments/AIDA-Fine_Topics/*.tsv ; do python getSimilarity_rcv1.py $x > Reuters/${x%.tsv}_rcv1.tsv ; done
+for x in entity_mentions/topic-based_experiments/AIDA-Fine_Topics/*.tsv ; do python getSimilarity_Wikipedia.py $x > Wikipedia/${x%.tsv}_wikipedia.tsv ; done
+for x in entity_mentions/topic-based_experiments/Wikinews-Topics/*.tsv ; do python getSimilarity.py $x > Google/${x%.tsv}_google.tsv ; done
+for x in entity_mentions/topic-based_experiments/Wikinews-Topics/*.tsv ; do python getSimilarity_rcv1.py $x > Reuters/${x%.tsv}_rcv1.tsv ; done
+for x in entity_mentions/topic-based_experiments/Wikinews-Topics/*.tsv ; do python getSimilarity_Wikipedia.py $x > Wikipedia/${x%.tsv}_wikipedia.tsv ; done
+
 
 # Gather results for each entity per class 
-python gatherResultsTypeClassification.py types similarities > results
+for x in entity_mentions/topic-based_experiments/Google/*tsv ; do types=${x#entity_mentions/dataset-based_experiments/Google/} ; python gatherResultsTypeClassification.py entity_types/${types%_google.tsv}_types.txt $x > ${x%.tsv}_results.tsv ; done
+for x in entity_mentions/dataset-based_experiments/Reuters/*tsv ; do types=${x#entity_mentions/dataset-based_experiments/Reuters/} ; python gatherResultsTypeClassification.py entity_types/${types%_rcv1.tsv}_types.txt $x > ${x%.tsv}_results.tsv ; done
+for x in entity_mentions/dataset-based_experiments/Wikipedia/*tsv ; do types=${x#entity_mentions/dataset-based_experiments/Wikipedia/} ; python gatherResultsTypeClassification.py entity_types/${types%_wikipedia.tsv}_types.txt $x > ${x%.tsv}_results.tsv ; done
 
-#  Order the gold standard scores via the DBpedia hierarchy 
-python orderGoldStandardTypes.py results > results_ordered
+# Also for the topic-based experiments:
+for x in entity_mentions/dataset-based_experiments/AIDA-Coarse_Topics/Google/*tsv ; do types=${x#entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/Google/} ; python gatherResultsTypeClassification.py entity_types/${types%_google.tsv}_types.txt $x > ${x%.tsv}_results.tsv ; done
+for x in entity_mentions/dataset-based_experiments/AIDA-Coarse_Topics/Reuters/*tsv ; do types=${x#entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/Reuters/} ; python gatherResultsTypeClassification.py entity_types/${types%_rcv1.tsv}_types.txt $x > ${x%.tsv}_results.tsv ; done
+for x in entity_mentions/dataset-based_experiments/AIDA-Coarse_Topics/Wikipedia/*tsv ; do types=${x#entity_mentions/topic-based_experiments/AIDA-Coarse_Topics/Wikipedia/} ; python gatherResultsTypeClassification.py entity_types/${types%_wikipedia.tsv}_types.txt $x > ${x%.tsv}_results.tsv ; done
+
+#  To measure the score on either coarse or fine grained types, the gold standard types need to be ordered 
+# via the DBpedia hierarchy 
+for x in *results.tsv ; do python orderGoldStandardTypes.py $x > ${x%results.tsv}ordered.tsv ; done 
 
 # Compute scores for the Tables in the paper 
 python computeScores.py results_ordered 
+
 # Compute scores for the R Figures 
 # Coarse grained
 computeScores_coarse.py
